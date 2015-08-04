@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+       <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
+       <bean id ="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+              <property name="transactionManager" ref="transactionManager"/>
+              <property name="transactionAttributes">
+                     <props></props>
+              </property>
+       </bean>
+       <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+              <property name="sessionFactory" ref="sessionFactory"></property>
+       </bean>
+
+
+       <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+              <property name="configLocation">
+                     <value>classpath:sql_map_config.xml</value>
+              </property>
+              <property name="dataSource">
+                     <ref local="dataSource" />
+              </property>
+       </bean>
+
+       <bean id="sqlMapClientTemplate"  class="org.springframework.orm.ibatis.SqlMapClientTemplate">
+              <property name="sqlMapClient" ref="sqlMapClient"/>
+       </bean>
+
+
+       <!-- 关于事务管理部分的配置 -->
+       <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+              <property name="sessionFactory" ref="sessionFactory" />
+       </bean>
+
+       <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+              <property name="locations">
+                     <list>
+                            <value>classpath*:jdbc.properties</value>
+                     </list>
+              </property>
+       </bean>
+
+       <bean id = "dataSource" class = "org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+              <property name="driverClassName" value="${jdbc.driverClassName}"/>
+              <property name="url" value="${jdbc.url}"/>
+              <property name="username" value="${jdbc.username}"/>
+              <property name="password" value="${jdbc.password}"/>
+              <property name="validationQuery" value="select 1"/>
+              <property name="testWhileIdle" value="true"/>
+              <property name="timeBetweenEvictionRunsMillis" value="3600000"/>
+              <property name="minEvictableIdleTimeMillis" value="18000000"/>
+              <property name="testOnBorrow" value="true"/>
+       </bean>
+
+       <bean id = "lobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler" lazy-init="true" />
+
+       <bean id = "sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+              <property name="dataSource" ref="dataSource"/>
+              <property name="lobHandler" ref="lobHandler"/>
+              <property name="mappingResources">
+                     <list>
+
+                     </list>
+              </property>
+              <property name="hibernateProperties">
+                     <props>
+                            <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+                            <prop key="hibernate.show_sql">false</prop>
+                            <prop key="hibernate.hbm2ddl.auto">update</prop>
+                            <prop key="connection.characterEncoding">UTF-8</prop>
+                            <prop key="connection.useUnicode">true</prop>
+                            <prop key="hibernate.connection.url">${jdbc.url}</prop>
+                            <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
+                     </props>
+              </property>
+              <property name="annotatedClasses">
+                     <list>
+
+                     </list>
+              </property>
+       </bean>
+
+       <bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+              <property name="fileEncoding" value="UTF-8" />
+              <property name="location" value="classpath:fastbuild.properties" />
+       </bean>
+
+       <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+              <property name="urlMap">
+                     <map>
+                            <entry key="/server/**" value="myResourceHandler" />
+                     </map>
+              </property>
+              <property name="order" value="100000" />
+       </bean>
+
+
+       <bean id="myResourceHandler" name="myResourceHandler"
+             class="org.springframework.web.servlet.resource.ResourceHttpRequestHandler">
+              <property name="locations" value="/server/portal" />
+              <property name="supportedMethods">
+                     <list>
+                            <value>GET</value>
+                            <value>HEAD</value>
+                            <value>POST</value>
+                     </list>
+              </property>
+
+       </bean>
+
+       <!-- <bean id="exceptionResolver" class="com.fastbuild.nd.handler.BizExceptionHandler"></bean> -->
+</beans>
