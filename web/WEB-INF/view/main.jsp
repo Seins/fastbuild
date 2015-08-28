@@ -19,11 +19,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/script/jquery.json.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/fastbuild/js/fastbuild.js"></script>
     <link rel="icon" href="${pageContext.request.contextPath}/resources/images/cloud_favicon.ico" type="image/gif" >
-    <style>
-        body{
-            padding-top: 63px;
-        }
-    </style>
+
 </head>
 <body>
     <jsp:include page="tpl/header/nav-top.jsp"></jsp:include>

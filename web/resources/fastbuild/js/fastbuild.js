@@ -17,7 +17,7 @@ $(function(){
         }
         if( $(this).text() >= 99){
             $(this).toggleClass("error");
-            $(this).text("…");
+            $(this).text("···");
         }else if($(this).text() <99 && $(this).text() >= 60){
             $(this).toggleClass("danger");
         }else if($(this).text() < 60 && $(this).text() >= 20){

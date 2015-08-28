@@ -26,12 +26,12 @@
 
 <jsp:include page="tpl/nav/nav_right.jsp"></jsp:include>
 
-<div class="fast-build-content display-box" style="margin: 0 auto">
+<div class="fast-build-content display-box" style="margin-top: 30px;">
   <h2>标签页</h2>
 </div>
 <jsp:include page="tpl/nav/nav_sign_horizontal.jsp"></jsp:include>
 
-<div class="fast-build-content display-box">
+<div class="fast-build-content display-box" style="margin:20px auto;">
   <h2>按钮</h2>
   <br>
   <input type="button" class="btn" value="button">
