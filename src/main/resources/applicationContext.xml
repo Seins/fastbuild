@@ -66,6 +66,9 @@
               <property name="mappingResources">
                      <list>
 
+                            <value>entityMap/PageEntity.hbm.xml</value>
+                            <value>entityMap/PageSimpleArticleEntity.hbm.xml</value>
+                            <value>entityMap/SimpleArticleEntity.hbm.xml</value>
                      </list>
               </property>
               <property name="hibernateProperties">
@@ -75,13 +78,15 @@
                             <prop key="hibernate.hbm2ddl.auto">update</prop>
                             <prop key="connection.characterEncoding">UTF-8</prop>
                             <prop key="connection.useUnicode">true</prop>
-                            <prop key="hibernate.connection.url">${jdbc.url}</prop>
+                            <prop key="hibernate.connection.url">jdbc:mysql://localhost:3307/fastbuild</prop>
                             <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
                      </props>
               </property>
               <property name="annotatedClasses">
                      <list>
-
+                            <value>com.fastbuild.entity.PageEntity</value>
+                            <value>com.fastbuild.entity.PageSimpleArticleEntity</value>
+                            <value>com.fastbuild.entity.SimpleArticleEntity</value>
                      </list>
               </property>
        </bean>

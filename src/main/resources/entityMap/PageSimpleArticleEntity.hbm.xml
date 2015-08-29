@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.fastbuild.entity.PageSimpleArticleEntity" table="page_simple_article" schema=""
+           catalog="fastbuild">
+        <id name="id">
+            <column name="id" sql-type="int" not-null="true"/>
+        </id>
+        <property name="pageId">
+            <column name="page_id" sql-type="int"/>
+        </property>
+        <property name="simpleArticleId">
+            <column name="simple_article_id" sql-type="int"/>
+        </property>
+    </class>
+</hibernate-mapping>

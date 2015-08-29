@@ -22,7 +22,7 @@
            <bean class="com.fastbuild.nd.interceptor.BizInteceptor"></bean> </mvc:interceptors> -->
 
        <context:component-scan base-package="com.fastbuild">
-              <context:exclude-filter type="annotation"   expression="org.springframework.stereotype.Service" />
+              <!--<context:exclude-filter type="annotation"   expression="org.springframework.stereotype.Service" />-->
        </context:component-scan>
 
        <!-- 添加注解驱动 -->

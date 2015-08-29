@@ -29,17 +29,17 @@
 <body>
 <jsp:include page="../tpl/header/nav-top.jsp"></jsp:include>
 
-<div class="content" id="renderMain">
+<div class="content" id="renderMain" style="border-bottom:1px solid #dddddd;">
     <div layout-id = "1">
         <div class="page-title">
-            <h4>布局与数据展示</h4>
+            <h4>Layout插件</h4>
         </div>
         <ul class="fast-build-menu">
-            <li class="item " data-ref="ref-nav" data-url = "${pageContext.request.contextPath}/data/list">
-                <a href="#" class="info-box">获取列表</a>
+            <li class="item " data-ref="ref-nav" data-url = "${pageContext.request.contextPath}/page/article/4">
+                <a href="#" class="info-box">Layout的介绍</a>
             </li>
-            <li class="item" data-ref="ref-nav" data-url = "${pageContext.request.contextPath}/data/list/9">
-                <a href="#"  class="info-box">获取对象</a>
+            <li class="item" data-ref="ref-nav" data-url = "${pageContext.request.contextPath}/page/article/5">
+                <a href="#"  class="info-box">Layout的使用</a>
             </li>
         </ul>
     </div>
@@ -59,20 +59,8 @@
         <div class="fast-build-page" data-id="panel3">
             <div  data-tpl="true">
                 <div class="info-box">
-                    <h4 name="title1" class="title"></h4>
-                    <p name="description1"></p>
-                    <h4 name="title2" class="title"></h4>
-                    <p name="description2"></p>
-                    <div class="img-box">
-                        <img name="img1" src=""/>
-                        <img name="img2" src=""/>
-                        <img name="img3" src=""/>
-                        <img name="img4" src=""/>
-                        <img name="img5" src=""/>
-                        <img name="img6" src=""/>
-                        <img name="img7" src=""/>
-
-                    </div>
+                    <h4 name="title" class="title"></h4>
+                    <div name="description" style="width: 90%; margin: 20px auto;;"></div>
                 </div>
             </div>
         </div>
@@ -86,7 +74,7 @@
             'action_class':'.info-box'
         });
 
-    })
+    });
 </script>
 <jsp:include page="../tpl/footer/footer_default.jsp"></jsp:include>
 

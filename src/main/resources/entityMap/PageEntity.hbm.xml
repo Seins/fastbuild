@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.fastbuild.entity.PageEntity" table="page" schema="" catalog="fastbuild">
+        <id name="id">
+            <column name="id" sql-type="int" not-null="true"/>
+        </id>
+        <property name="pageTitle">
+            <column name="page_title" sql-type="varchar" length="40"/>
+        </property>
+        <property name="pageUri">
+            <column name="page_uri" sql-type="varchar" length="500"/>
+        </property>
+        <property name="orderNo">
+            <column name="order_no" sql-type="int"/>
+        </property>
+    </class>
+</hibernate-mapping>

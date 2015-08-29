@@ -12,4 +12,6 @@
 	    useStatementNamespaces="true"/>
 
 	<sqlMap resource="sqlMap/sys.xml"/>
+	<sqlMap resource="sqlMap/page.xml"/>
+
 </sqlMapConfig>

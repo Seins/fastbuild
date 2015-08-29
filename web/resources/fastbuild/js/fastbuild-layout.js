@@ -3,12 +3,19 @@
     //定义layout的构造函数
     var layout = function(opt) {
         this.defaults = {
-        	'render_id':null,
-            'border_color': '#dddddd',
-            'panels_weights': [2,5],
-            'action_class':'.item',
-            'align': 'horizontal',
-            'win_width':window.document.body.offsetWidth,//窗口高度
+        	'render_id':null, /** 根容器ID **/
+            'border_color': '#dddddd', /** 布局边框颜色 **/
+            'panels_weights': [2,5],/** 布局划分比例 根据子容器的个数来填写，
+			 							会将win_width 按照此比例划分给自容器
+			 						**/
+            'action_class':'.item', /**布局中用以弹出下一个布局的响应元素，允许请求动态数据，
+			 							标记特殊属性[data-ref](与特殊属性[data-id]对应，两者值相同，则指向[data-id]所对应的容器)
+			 							和[data-url]
+			 						**/
+            'align': 'horizontal',/** 布局方案，横向布局划分 与 纵向布局划分
+			 							值分别为 horizontal 、 vertical
+			 					  **/
+            'win_width':window.document.body.offsetWidth,/**窗口高度 默认为浏览器可见区域宽度，无需修改**/
             'panel_css':{
             	'display':'block',
             	'position':'absolute',
@@ -19,14 +26,14 @@
             	'border-left':'1px solid #dddddd',
 				'overflow':'hidden',
 				'overflow-y':'auto'
-            },
+            }, /** 布局子容器的样式，默认无需修改 **/
             'root_css':{
             	'position':'relative',
             	'min-height':(window.document.body.clientHeight -69 - 45),
             	'height':(window.document.body.clientHeight -69 - 45),
             	'background':'#efefef',
-            	'overflow':'hidden'
-            }
+            	'overflow-x':'hidden'
+            } /** 根容器的样式，默认无需修改 **/
         },
         this.options = $.extend({}, this.defaults, opt);
     }
@@ -38,7 +45,7 @@
     		}else if(this.options.align == 'vertical'){
     			this.vt_init();
     		}else{
-    			alert('options error ! unknown align method:'+this.options.align);
+    			tip('options error ! unknown align method:'+this.options.align);
     		}
     	},
         hz_init: function() {
@@ -118,11 +125,20 @@
 					'left':left,
 					'opacity':'100'
 				},500);
-				var data = requestData(url);
-				serializationJsonAndAutowireData(data,ref);
-				selfRoot.next().fadeIn('normal',function(){
-					$('[data-id = '+ref+']').show();
-				});
+				if(url != undefined && url != ""){
+					var data = requestData(url);
+					if(data == null || data== undefined){
+						//数据请求为空 则 阻塞ui的更新
+						return;
+					}
+					serializationJsonAndAutowireData(data,ref);
+				}
+				if(selfRoot.next() != undefined){
+					selfRoot.next().fadeIn('normal',function(){
+						$('[data-id = '+ref+']').show();
+					});
+				}
+
 			});
 		},
 		getLayoutPanel:function(element){
@@ -145,7 +161,12 @@
 	 */
 	function requestData(url){
 		//console.info("request data from %o ... ",url);
+
 		var d = null;
+		if(url == "" || url == undefined  ){
+			tip('request failed,bad url :'+ url);
+			return;
+		}
 		$.ajax({
 			url:url,
 			async:false,
@@ -155,12 +176,16 @@
 			success:function(data){
 				if(data.result == true){
 					d = data.data;
+					if(d == undefined || d == null || d.length <= 0){
+						tip('请求数据成功，单数据为空!');
+					}
+					//console.info("response data:%o",data);
 				}else{
-					alert('请求数据失败:'+data.errorMsg);
+					tip('请求数据失败:'+data.errorMsg);
 				}
 			},
 			error:function(request,status ,e){
-				alert('请求发生错误：'+e);
+				tip('请求('+getContextPath() + url+')发生错误：'+e);
 			}
 		});
 		return d;
@@ -219,8 +244,16 @@
 						element.attr("href",dataArray[p]);
 					}else if(element.is('img')){
 						element.attr("src",dataArray[p]);
-					}else{
-						element.text( dataArray[p]);
+					}else if(element.is('div')){
+						element.html( dataArray[p]);
+					}else if(element.is('input')){
+						if(element.attr("type") == "text" || element.attr("type") == "password"){
+							element.val(dataArray[p]);
+						}else{
+							element.text(dataArray[p]);
+						}
+					}else {
+						element.text(dataArray[p]);
 					}
 				}
 				e.attr("data-tpl",'false');
