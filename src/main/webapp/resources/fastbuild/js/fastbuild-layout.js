@@ -29,7 +29,7 @@
             }, /** 布局子容器的样式，默认无需修改 **/
             'root_css':{
             	'position':'relative',
-            	'min-height':(window.document.body.clientHeight -69 - 45),
+            	'min-height':'480px',
             	'height':(window.document.body.clientHeight -69 - 45),
             	'background':'#efefef',
             	'overflow-x':'hidden'
@@ -132,12 +132,13 @@
 						return;
 					}
 					serializationJsonAndAutowireData(data,ref);
+					if(selfRoot.next() != undefined){
+						selfRoot.next().fadeIn('normal',function(){
+							$('[data-id = '+ref+']').show();
+						});
+					}
 				}
-				if(selfRoot.next() != undefined){
-					selfRoot.next().fadeIn('normal',function(){
-						$('[data-id = '+ref+']').show();
-					});
-				}
+
 
 			});
 		},
@@ -177,7 +178,7 @@
 				if(data.result == true){
 					d = data.data;
 					if(d == undefined || d == null || d.length <= 0){
-						tip('请求数据成功，单数据为空!');
+						tip('请求数据成功，但数据为空!');
 					}
 					//console.info("response data:%o",data);
 				}else{
@@ -210,6 +211,8 @@
 				var tag = e.attr("data-url");
 				if(dataArray[count][tag]){
 					e.attr("data-url",dataArray[count][tag]);
+				}else{
+					e.removeAttr("data-url");
 				}
 				for(var p in dataArray[count]){
 
@@ -236,6 +239,8 @@
 				if(dataArray[tag]){
 					//console.info("set tpl attr %o ,value %o",e.attr("data-url") , dataArray[tag]);
 					e.attr("data-url",dataArray[tag]);
+				}else{
+					e.removeAttr("data-url");
 				}
 				var element = e.find('[name='+p+']');
 				if(element != undefined){
