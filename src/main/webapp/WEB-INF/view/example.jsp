@@ -140,7 +140,7 @@
 </div>
 <jsp:include page="tpl/content/prj_review.jsp"></jsp:include>
 <div class="fast-build-content display-box" style="margin: 0 auto">
-  <h2>Component2</h2>
+  <h2>Render插件</h2>
 </div>
 <jsp:include page="tpl/content/prj_mgr.jsp"></jsp:include>
 
